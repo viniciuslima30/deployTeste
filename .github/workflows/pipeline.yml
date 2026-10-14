@@ -41,4 +41,4 @@ jobs:
           script: |
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app-docker-aula:latest
             docker rm -f app-docker-aula || true
-            docker run -d --name app-docker-aula -p 80:80 --restart unless-stopped ${{ secrets.DOCKERHUB_USERNAME }}/app-docker-aula:latest
+            docker run -d --name app-docker-aula -p 80:87 --restart unless-stopped ${{ secrets.DOCKERHUB_USERNAME }}/app-docker-aula:latest
