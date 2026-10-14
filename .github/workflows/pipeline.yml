@@ -1,4 +1,3 @@
-
 name: Build e Deploy Docker
 
 on:
@@ -39,6 +38,12 @@ jobs:
           username: ${{ secrets.AZURE_VM_USER }}
           key: ${{ secrets.AZURE_VM_SSH_KEY }}
           script: |
+            # 1. Baixa a nova imagem primeiro
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/app-docker-aula:latest
+
+            # 2. Garante a parada e remoção completa do container antigo
+            docker stop app-docker-aula || true
             docker rm -f app-docker-aula || true
-            docker run -d --name app-docker-aula -p 80:87 --restart unless-stopped ${{ secrets.DOCKERHUB_USERNAME }}/app-docker-aula:latest
+
+            # 3. Roda o novo container (removido o termo 'ajuste' do final)
+            docker run -d --name app-docker-aula -p 80:8000 --restart unless-stopped ${{ secrets.DOCKERHUB_USERNAME }}/app-docker-aula:latest
